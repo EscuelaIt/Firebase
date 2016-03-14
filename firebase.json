@@ -1,9 +1,0 @@
-{
-  "firebase": "cajondesastre",
-  "public": ".",
-  "ignore": [
-    "firebase.json",
-    "**/.*",
-    "**/node_modules/**"
-  ]
-}
