@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>chat</title>
+</head>
+<body>
+
+
+  <div>
+    <label>Nombre:</label> <input type="text" id="nombre">
+    <br>
+    <label>Mensaje:</label> <input type="text" id="mensaje">
+    <br>
+    <button id="boton">Enviar Mensaje</button>
+  </div>
+
+  <h2>Mensajes</h2>
+  <div id="msg"></div>
+
+  <script src="../bower_components/firebase/firebase.js"></script>
+  <script>
+    var ref = new Firebase("https://cajondesastre.firebaseio.com/mensajes");
+    document.getElementById("boton").addEventListener("click", function(){
+      ref.push({
+        nombre: document.getElementById("nombre").value,
+        mensaje: document.getElementById("mensaje").value
+      });
+    });
+
+    ref.on("child_added", function(snapshot){
+      var msg = snapshot.val();
+      var elem = document.createElement("p");
+      elem.setAttribute("id", snapshot.key());
+      elem.textContent = msg.nombre + ": " + msg.mensaje;
+      document.getElementById("msg").appendChild(elem);
+    });
+
+    ref.on("child_changed", function(snap){
+      var msg = snap.val();
+      var p = document.getElementById(snap.key());
+      p.textContent = msg.nombre + ": " + msg.mensaje;
+    });
+
+    ref.on("child_removed", function(snap){
+      var p = document.getElementById(snap.key());
+      document.getElementById("msg").removeChild(p)
+    });
+  </script>
+</body>
+</html>

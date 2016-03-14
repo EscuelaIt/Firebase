@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo de Firebase</title>
+</head>
+<body>
+  <h1></h1>
+  <p></p>
+  <div></div>
+
+  <script src="../bower_components/firebase/firebase.js"></script>
+  <script>
+    var ref = new Firebase("https://cajondesastre.firebaseio.com/appData");
+    ref.on("value", function(snapshot){
+      //snapshot instantanea
+      var appData = snapshot.val();
+      document.querySelector("h1").textContent = appData.appName;
+      document.querySelector("p").textContent = appData.admin;
+      if(snapshot.hasChild("email")){
+        document.querySelector("div").textContent = appData.email;
+      } else {
+        document.querySelector("div").textContent = "Contacta con el formulario";
+      }
+    });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo de Firebase</title>
+</head>
+<body>
+  <script src="../bower_components/firebase/firebase.js"></script>
+  <script>
+    var ref = new Firebase("https://cajondesastre.firebaseio.com/");
+    var refHijo = ref.child("dato");
+
+    //var ref = new Firebase("https://cajondesastre.firebaseio.com/dato");
+
+    refHijo.on("value", function(snapshot){
+      //snapshot instantanea
+      var dato = snapshot.val();
+      alert(dato);
+    });
+
+  </script>
+</body>
+</html>

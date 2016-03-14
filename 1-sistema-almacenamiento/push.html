@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <script src="../bower_components/firebase/firebase.js"></script>
+  <script>
+
+    ref = new Firebase("https://cajondesastre.firebaseio.com/push");
+//    nuevaRef = ref.push();
+//    nuevaRef.set({
+//      algo: 34343
+//    });
+
+//    ref.push().set({
+//      algo: "dfdsfsdfsd"
+//    });
+
+//    var nuevaReferencia = ref.push({
+//      algo: "otra cosa"
+//    });
+//
+//    alert(nuevaReferencia.key());
+
+      var nr = ref.push();
+      alert(nr.key());
+
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo de Firebase</title>
+</head>
+<body>
+
+
+
+  <script src="../bower_components/firebase/firebase.js"></script>
+  <script>
+    var ref = new Firebase("https://cajondesastre.firebaseio.com/");
+
+
+//    ref.set({
+//      appName: "Cajón Desastre",
+//      appUrl: "http://cajondesastre.info",
+//      license: {
+//          type: "copyright",
+//          year:  2016
+//      }
+//    });
+
+
+//    ref.update({
+//      admin: "yo@escuela.it",
+//      appName: "Mi Cajón"
+//    })
+
+//    var refLicencia = ref.child("license/type");
+//    refLicencia.set("copyleft");
+
+//    var refLicencia = ref.child("license");
+//    refLicencia.update({
+//      type: "Copyleft"
+//    });
+
+
+    ref.update({
+      license: {
+        type: "kkleft"
+      }
+    }, function(error){
+      if(error){
+        alert("hubo un error al editarse" + error);
+      }else{
+        alert("terminó de editarse");
+      }
+    });
+
+
+
+  </script>
+</body>
+</html>
