@@ -1,0 +1,22 @@
+{
+  "name": "curso-firebase",
+  "homepage": "https://github.com/EscuelaIt/Firebase",
+  "authors": [
+    "Miguel Angel Alvarez <malvarez@desarrolloweb.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "copyright escuelait",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "firebase": "^2.4.1"
+  }
+}
