@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todos los cursos</title>
+</head>
+<body>
+  <h1>Todos los cursos</h1>
+  <div id="listado"></div>
+
+  <script src="../bower_components/firebase/firebase.js"></script>
+  <script>
+    var usuario = "3ce38289-3123-4064-887f-b7ce62c85330";
+    var curso = "curso3";
+
+//    var loc = "https://ejcursosprueba.firebaseio.com/estudiantes/" + curso + "/" + usuario;
+//    console.log(loc);
+//    ref = new Firebase(loc);
+
+
+    var raiz = new Firebase("https://ejcursosprueba.firebaseio.com/estudiantes");
+    var ref = raiz.child(curso + "/" + usuario);
+    console.log(ref);
+
+    ref.once("value", function(s){
+      if(s.val()){
+        console.log("Si está suscrito");
+      }else{
+        console.log("no está suscrito");
+      }
+    })
+
+  </script>
+</body>
+</html>

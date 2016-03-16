@@ -1,0 +1,30 @@
+"cursos": {
+  "curso1": {
+    "nombre": "Polymer",
+    "inicio": "21/02/2016",
+
+    "clases": {
+      "clase1": {
+        "titulo": "Introducción a Polymer",
+        "fecha": "21/02/2016",
+        "profesor": "Miguel A"
+      },
+      "clase2": {
+        "titulo": "Propiedades",
+        "fecha": "22/02/2016",
+        "profesor": "Alvari M"
+      }
+    },
+
+    "estudiantes": {
+      "usuario1": {
+        "nombre": "Pepe Trigo",
+        "email": "pepe@pepe.com"
+      },
+      "usuario2": {
+        "nombre": "Lola Fernandez",
+        "email": "lola@lola.com"
+      }
+    }
+  }
+}

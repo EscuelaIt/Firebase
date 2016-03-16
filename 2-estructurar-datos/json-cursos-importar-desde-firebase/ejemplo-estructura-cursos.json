@@ -1,0 +1,170 @@
+{
+  "clases" : {
+    "curso1" : {
+      "-K849quYZG-ZvnV6OwZr" : {
+        "date" : "2016-01-14",
+        "description" : "Primera clase de apoyo de AngularJS: controladores, modelos, directivas",
+        "title" : "Iniciación al framework AngularJS"
+      },
+      "-K86LiqFZ62jTRXHdSIL" : {
+        "date" : "2016-01-15",
+        "description" : "En esta clase vimos y practicamos con varios componentes fundamentales de AngularJS, como son las vistas y las factorías.",
+        "title" : "Inyección de dependencias, vistas y factorías"
+      },
+      "-K8aMx9j78V7rG0ifaNL" : {
+        "date" : "2016-01-21",
+        "description" : "$http para Ajax y acceso a recursos que nos ofrece un servicio web por medio del estándar REST",
+        "title" : "Ajax, API REST AngularJS"
+      }
+    },
+    "curso2" : {
+      "-K8550ZRkh7up3rbfpzR" : {
+        "date" : "2016-01-14",
+        "description" : "El documento básico HTML, primeras etiquetas",
+        "title" : "Documento básico"
+      },
+      "-K8ONoKQ7mBDbQkIjJZI" : {
+        "date" : "2016-01-18",
+        "description" : "Segunda clase de HTML, listas y tablas",
+        "title" : "Listas y tablas"
+      }
+    },
+    "curso3" : {
+      "-K8550ZRkh7up3rbfpzR" : {
+        "date" : "2016-02-14",
+        "description" : "Conocimientos esenciales de SEO",
+        "title" : "SEO básico"
+      },
+      "-K8ONoKQ7mBDbQkIjJZI" : {
+        "date" : "2016-02-18",
+        "description" : "Qué es SEO on Page, como hacer una página fácilmente posicionable",
+        "title" : "SEO on Page"
+      }
+    }
+  },
+  "cursos" : {
+    "curso1" : {
+      "informacion" : "Curso de AngularJS, el popular framework Javascript",
+      "nombre" : "Curso de AngularJS"
+    },
+    "curso2" : {
+      "informacion" : "Curso básico a avanzado de HTML",
+      "nombre" : "Curso de HTML"
+    },
+    "curso3" : {
+      "informacion" : "Posicionamiento en buscadores desde cero",
+      "nombre" : "SEO desde cero"
+    }
+  },
+  "estudiantes" : {
+    "curso1" : {
+      "3ce38289-3123-4064-887f-b7ce62c85330" : true,
+      "51523f1d-ecd3-4fb9-bbda-5600be29532e" : true,
+      "c77753ae-c555-4d37-9e41-a893f0df0a9a" : true
+    },
+    "curso2" : {
+      "3ce38289-3123-4064-887f-b7ce62c85330" : true,
+      "c77753ae-c555-4d37-9e41-a893f0df0a9a" : true
+    },
+    "curso3" : {
+      "3ce38289-3123-4064-887f-b7ce62c85330" : true,
+      "c77753ae-c555-4d37-9e41-a893f0df0a9a" : true,
+      "c77753ae-c555-4d37-9e41-a893f0df4444" : true
+    }
+  },
+  "usuarios" : {
+    "0owH4289-3123-4064-887f-b7ce62cdkwjw" : {
+      "apellidos" : "Moreno",
+      "email" : "alfil@moreno.es",
+      "nombre" : "Alfil"
+    },
+    "13Sdgg89-3123-4064-887f-b7ce62cdF4" : {
+      "apellidos" : "Gonzalves",
+      "email" : "bento@rs.com.br",
+      "nombre" : "Bento"
+    },
+    "3ce38289-3123-4064-887f-b7ce62c85330" : {
+      "apellidos" : "Gonzalez",
+      "email" : "alberto@desarrolloweb.com",
+      "nombre" : "Alberto"
+    },
+    "51523f1d-ecd3-4fb9-bbda-5600be29532e" : {
+      "apellidos" : "Pilastras",
+      "email" : "pilar@pilastras.com",
+      "nombre" : "Pilar"
+    },
+    "66yG4289-3123-4064-887f-b7ce62cdkAAsd" : {
+      "apellidos" : "Silva",
+      "email" : "de.marcos@silva.com",
+      "nombre" : "Marcos"
+    },
+    "9dke2289-3123-4064-887f-aaae62c85294" : {
+      "apellidos" : "García",
+      "email" : "yo@garcia.com",
+      "nombre" : "Joaquín"
+    },
+    "DswT4289-3123-4064-887f-b7ce62cdllai" : {
+      "apellidos" : "Leal",
+      "email" : "torpedo@leal.com",
+      "nombre" : "Oscar"
+    },
+    "Fes71289-3123-4064-887f-b7ce62c092e4" : {
+      "apellidos" : "Filho",
+      "email" : "leila@leila.com",
+      "nombre" : "Leila"
+    },
+    "Mvkj4289-3123-4064-887f-b7ce62cssa33" : {
+      "apellidos" : "Rovira",
+      "email" : "carlos@ro.com",
+      "nombre" : "Carlos"
+    },
+    "aAqaA289-3123-4064-887f-b7ce62cd22sS" : {
+      "apellidos" : "Genarez",
+      "email" : "genaro@genarez.com",
+      "nombre" : "Genaro"
+    },
+    "c77753ae-c555-4d37-9e41-a893f0df0a9a" : {
+      "apellidos" : "Pelotas",
+      "email" : "pepe@pepe.com",
+      "nombre" : "Pepe"
+    },
+    "c77753ae-c555-4d37-9e41-a893f0df4444" : {
+      "apellidos" : "Alarcón",
+      "email" : "yo@gmail.com",
+      "nombre" : "Santiago"
+    },
+    "e0o1289-3123-4064-887f-b7ce62cdES" : {
+      "apellidos" : "Valdir",
+      "emal" : "diego@valdir.com",
+      "nombre" : "Diego"
+    },
+    "g3W55289-3123-4064-887f-b7ce62cdkh554" : {
+      "apellidos" : "Bárcenas",
+      "email" : "ty@uuy.bom",
+      "nombre" : "Lucas"
+    },
+    "pap1q289-3123-4064-887f-b7ce62c8aoem" : {
+      "apellidos" : "Martínez",
+      "email" : "julia@hotmail.com",
+      "nombre" : "Julia"
+    }
+  },
+  "usuariosSuscritos" : {
+    "3ce38289-3123-4064-887f-b7ce62c85330" : {
+      "curso1" : true,
+      "curso2" : true,
+      "curso3" : true
+    },
+    "51523f1d-ecd3-4fb9-bbda-5600be29532e" : {
+      "curso1" : true
+    },
+    "c77753ae-c555-4d37-9e41-a893f0df0a9a" : {
+      "curso1" : true,
+      "curso2" : true,
+      "curso3" : true
+    },
+    "c77753ae-c555-4d37-9e41-a893f0df4444" : {
+      "curso3" : true
+    }
+  }
+}

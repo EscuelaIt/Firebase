@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todos los cursos</title>
+</head>
+<body>
+  <h1>Todos los cursos</h1>
+  <div></div>
+
+  <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+  <script>
+    var ref = new Firebase("https://yep.firebaseio.com/cursos");
+    ref.on("child_added", function(snap){
+      var curso = snap.val();
+      var elem = document.createElement("p");
+      elem.innerHTML = "<b>" + curso.nombre + "</b>: <i>" + curso.informacion + "</i>";
+      document.querySelector("div").appendChild(elem);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cursos de un usuario</title>
+</head>
+<body>
+  <h1>Cursos de un usuario</h1>
+  <div></div>
+
+  <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+  <script>
+    var raiz = new Firebase("https://yep.firebaseio.com/");
+    var usuario = "3ce38289-3123-4064-887f-b7ce62c85330";
+    var ref = raiz.child("usuariosSuscritos/" + usuario);
+    ref.on("child_added", function(snap){
+      var curso = snap.key();
+      var refCurso = raiz.child("cursos/" + curso + "/nombre");
+      // ATENCIÓN EL "ONCE", PARA RECIBIR EL DATO UNA SOLA VEZ
+      refCurso.once("value", function(snapCurso) {
+          var nombre = snapCurso.val();
+          var elem = document.createElement("p");
+          elem.innerHTML = "<b>" + nombre + "</b>";
+          document.querySelector("div").appendChild(elem);
+      });
+    });
+  </script>
+</body>
+</html>

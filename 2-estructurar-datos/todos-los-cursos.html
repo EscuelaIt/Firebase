@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todos los cursos</title>
+</head>
+<body>
+  <h1>Todos los cursos</h1>
+  <div id="listado"></div>
+
+  <script src="../bower_components/firebase/firebase.js"></script>
+  <script>
+    var ref = new Firebase("https://ejcursosprueba.firebaseio.com/cursos");
+    ref.on("child_added", function(snap) {
+      var p = document.createElement("p");
+      var cursoActual = snap.val();
+      p.innerHTML = cursoActual.nombre + "<br>" + cursoActual.informacion;
+      document.getElementById("listado").appendChild(p);
+    });
+  </script>
+</body>
+</html>

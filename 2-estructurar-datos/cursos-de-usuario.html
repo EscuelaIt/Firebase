@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cursos de usuario</title>
+</head>
+<body>
+  <h1>Cursos de usuario</h1>
+  <div id="listado"></div>
+
+  <script src="../bower_components/firebase/firebase.js"></script>
+  <script>
+    var usuario = "c77753ae-c555-4d37-9e41-a893f0df4444";
+
+    //var refCursos = new Firebase("https://ejcursosprueba.firebaseio.com/usuariosSuscritos/" + usuario);
+
+    var ref = new Firebase("https://ejcursosprueba.firebaseio.com/usuariosSuscritos");
+    var refCursos = ref.child(usuario);
+
+    refCursos.on("child_added", function(snap){
+      //console.log(snap.key());
+      var curso = snap.key();
+      var refCurso = new Firebase("https://ejcursosprueba.firebaseio.com/cursos/" + curso + "/nombre");
+      refCurso.once("value", function(snapNombre){
+        var nombre = snapNombre.val();
+        var elem = document.createElement("p");
+        elem.textContent = nombre;
+        document.getElementById("listado").appendChild(elem);
+      });
+    });
+
+
+  </script>
+</body>
+</html>

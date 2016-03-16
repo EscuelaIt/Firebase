@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Usuarios de un curso</title>
+</head>
+<body>
+  <h1>Usuarios de un curso</h1>
+  Curso:
+  <select id="cursos">
+    <option value="-">Seleccionar</option>
+  </select>
+  <div></div>
+
+  <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+  <script>
+    document.getElementById('cursos').addEventListener("change", function(){
+      var curso = document.getElementById('cursos').value;
+      document.querySelector("div").textContent = "";
+      if(curso != "-"){
+        var raiz = new Firebase("https://yep.firebaseio.com/");
+        var ref = raiz.child("estudiantes/" + curso);
+        ref.on("child_added", function(snap){
+          var us = snap.key();
+          var refUsuario= raiz.child("usuarios/" + us);
+          // ATENCIÓN EL "ONCE", PARA RECIBIR EL DATO UNA SOLA VEZ
+          refUsuario.once("value", function(snapUs) {
+              var usuario = snapUs.val();
+              var elem = document.createElement("p");
+              elem.innerHTML = "<b>" + usuario.nombre + " " + usuario.apellidos + "</b>";
+              document.querySelector("div").appendChild(elem);
+          });
+        });
+      }
+    });
+
+    function rellenarSelect(campo){
+      var ref = new Firebase("https://yep.firebaseio.com/");
+      var refCampo = ref.child(campo);
+      var select = document.getElementById(campo);
+      refCampo.on("child_added", function(snap){
+        var option = document.createElement("option");
+        option.setAttribute("value", snap.key());
+        option.textContent = snap.val().nombre;
+        select.appendChild(option);
+      });
+    }
+    rellenarSelect("cursos");
+  </script>
+</body>
+</html>

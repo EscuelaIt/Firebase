@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Comprobar si un usuario está suscrito a un curso</title>
+</head>
+<body>
+  <h1>Comprobar si un usuario está suscrito a un curso</h1>
+  <select id="usuarios">
+    <option value="-">Seleccionar</option>
+  </select>
+  <select id="cursos">
+    <option value="-">Seleccionar</option>
+  </select>
+  <span id="resultado"></span>
+
+  <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+  <script>
+    function esSuscriptor(usuario, curso){
+      var ref = new Firebase("https://yep.firebaseio.com/estudiantes/" + curso + "/" + usuario);
+      ref.once("value", function(snap){
+        var res = document.getElementById("resultado");
+        if(snap.val() === null){
+          res.textContent = "No está en el curso";
+        }else{
+          res.textContent = "Está en el curso";
+        }
+      });
+    }
+
+    function rellenarSelect(campo){
+      var ref = new Firebase("https://yep.firebaseio.com/");
+      var refCampo = ref.child(campo);
+      var select = document.getElementById(campo);
+      refCampo.on("child_added", function(snap){
+        var option = document.createElement("option");
+        option.setAttribute("value", snap.key());
+        option.textContent = snap.val().nombre;
+        select.appendChild(option);
+      });
+    }
+    rellenarSelect("usuarios");
+    rellenarSelect("cursos");
+
+    function selectListener(event){
+      document.getElementById("resultado").innerHTML = "";
+      var usuario = document.getElementById('usuarios').value;
+      var curso = document.getElementById('cursos').value;
+      if(usuario !== "-" && curso !== "-"){
+        console.log(usuario, curso)
+        esSuscriptor(usuario, curso);
+      }
+    }
+    document.getElementById('usuarios').addEventListener("change", selectListener);
+    document.getElementById('cursos').addEventListener("change", selectListener);
+
+
+    //esSuscriptor("3ce38289-3123-4064-887f-b7ce62c85330", "curso2");
+  </script>
+</body>
+</html>
