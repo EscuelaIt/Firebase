@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo de autenticación</title>
+</head>
+<body>
+  <h1>Autenticación</h1>
+  <div id="registroForm">
+    <label>Email:</label> <input type="text" id="email">
+    <br>
+    <label>Clave:</label> <input type="text" id="clave">
+    <br>
+    <button id="botonregistro">Alta de usuario</button> //// <button id="botonlogin">Login de usuario</button>
+    <br>
+    <button id="loginfacebook">Login con Facebook</button> //// <button id="logintwitter">Login con Twitter</button>
+  </div>
+  <button id="logout" style="display: none;">Logout</button>
+  <div id="mensaje"></div>
+
+  <script src="../bower_components/firebase/firebase.js"></script>
+  <script>
+    var ref = new Firebase("https://ejcursosprueba.firebaseio.com/");
+
+    function alteraEstadoAuth(auth){
+      if(auth) {
+        document.getElementById("registroForm").style.display = "none";
+        document.getElementById("logout").style.display = "block";
+        document.getElementById("mensaje").textContent = "Usuario autenticado con " + auth.uid;
+      }else{
+        document.getElementById("registroForm").style.display = "block";
+        document.getElementById("logout").style.display = "none";
+      }
+    }
+
+    var auth = ref.getAuth();
+    alteraEstadoAuth(auth);
+
+
+
+    function creaObjUser() {
+      var email = document.getElementById("email").value;
+      var clave = document.getElementById("clave").value;
+      return {
+        email: email,
+        password: clave
+      };
+    }
+
+    document.getElementById("botonregistro").addEventListener("click", function(){
+      var objUser = creaObjUser();
+      ref.createUser(objUser, function(error, userData){
+        console.log(error);
+        //debugger
+        if(error){
+          document.getElementById("mensaje").textContent = "Tenemos un problema " + error.message;
+        } else {
+           document.getElementById("mensaje").textContent = "Usuario registrado";
+        }
+      });
+    });
+
+    document.getElementById("botonlogin").addEventListener("click", function(){
+      var objUser = creaObjUser();
+      ref.authWithPassword(objUser, function(error, authData){
+        if(error) {
+          document.getElementById("mensaje").textContent = "Error en el login: " + error.code;
+        } else {
+          document.getElementById("mensaje").textContent = "Autenticado usuario " + authData.uid;
+          //alteraEstadoAuth(authData);
+        }
+      });
+    });
+
+    document.getElementById("logout").addEventListener("click", function(){
+      ref.unauth();
+      document.getElementById("mensaje").textContent = "logout realizado";
+    });
+
+    ref.onAuth(function(authData){
+      alteraEstadoAuth(authData);
+      console.log(authData);
+    });
+
+    document.getElementById("loginfacebook").addEventListener("click", function(){
+      ref.authWithOAuthPopup("facebook", function(error, authData) {
+        if (error) {
+          document.getElementById("mensaje").textContent = "Error en el login: " + error.code;
+        } else {
+          document.getElementById("mensaje").textContent = "Autenticado usuario " + authData.uid;
+        }
+      },{
+         scope: "public_profile,email"
+      });
+    });
+
+
+    document.getElementById("logintwitter").addEventListener("click", function(){
+      ref.authWithOAuthRedirect("twitter", function(error, authData) {
+        if (error) {
+          document.getElementById("mensaje").textContent = "Error en el login: " + error.code;
+        } else {
+          //nunca voy a llegar aquí
+          document.getElementById("mensaje").textContent = "Autenticado usuario " + authData.uid;
+        }
+      });
+    });
+
+
+
+  </script>
+</body>
+</html>

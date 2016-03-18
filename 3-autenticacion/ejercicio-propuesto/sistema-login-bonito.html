@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sistema de login</title>
+  <style>
+  body{
+    font-family: sans-serif;
+  }
+  h1{
+    margin: 5px 0 0 0;
+  }
+  .boton{
+    background-color: #fdd;
+    border-radius: 5px;
+    padding: 7px 10px;
+    display: inline-block;
+    margin: 10px 20px 10px 0;
+  }
+  #logout{
+    cursor: pointer;
+  }
+  #botonlogin, #botonregistro{
+    cursor: pointer;
+    background-color: #eef;
+    line-height: 1.5em;
+  }
+  #estadologin{
+    background-color: #ddd;
+  }
+  #registroForm{
+    border: 1px solid #ddd;
+    line-height: 2em;
+    padding: 10px;
+    width: 98%;
+    margin-bottom: 10px;
+    display: table;
+  }
+  section{
+    width: 30%;
+    padding: 1%;
+    display: table-cell;
+    background-color: #ff999;
+  }
+  #registroForm label{
+    width: 130px;
+    display: inline-block;
+  }
+  #mensaje{
+    padding: 10px;
+  }
+  .error{
+    color: red;
+    background-color: #ffdddd;
+  }
+  .correcto {
+    color: green;
+    background-color: #ddffdd;
+  }
+  #social{
+    margin: 10px 0;
+  }
+  #social img{
+    margin-right: 20px;
+    width: 125px;
+    cursor: pointer;
+  }
+  </style>
+</head>
+<body>
+  <h1>Autenticación</h1>
+  <div id="estadologin" class="boton"></div>
+  <div id="logout" class="boton">Logout</div>
+  <div id="registroForm">
+    <section>
+      <h2>Registro</h2>
+      <label>Nombre:</label> <input type="text" id="nombre">
+      <br>
+      <label>Apellidos:</label> <input type="text" id="apellidos">
+      <br>
+      <label>Email:</label> <input type="text" id="emailregistro">
+      <br>
+      <label>Clave:</label> <input type="text" id="claveregistro">
+      <br>
+      <div class="boton" id="botonregistro">Alta de usuario</div>
+    </section>
+    <section>
+      <h2>Login</h2>
+      <label>Email:</label> <input type="text" id="emaillogin">
+      <br>
+      <label>Clave:</label> <input type="text" id="clavelogin">
+      <br>
+      <div class="boton" id="botonlogin">Login</div>
+      <p><a href="#" id="recordarclave">Recordarme la clave</a></p>
+    </section>
+    <section>
+      <h2>Accede con una red social</h2>
+      <div id="social">
+        <img src="log-twitter.png" alt="Login con Twitter" id="logtwitter">
+        <img src="log-facebook.png" alt="Login con Facebook" id="logfacebook">
+        <a href="" id="loggithub">github</a>
+        <a href="" id="loggoogle">google</a>
+      </div>
+    </section>
+  </div>
+  <div id="mensaje"></div>
+
+  <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+  <script>
+  function errorCodes(code){
+    switch (code) {
+      case 'INVALID_EMAIL':
+        return 'Email inválido';
+      case 'INVALID_PASSWORD':
+        return 'Clave incorrecta';
+      case 'EMAIL_TAKEN':
+        return 'Ese email ya es de otro usuario';
+      case 'INVALID_CREDENTIALS':
+        return 'Credenciales incorrectas'
+    }
+    return code
+  }
+  function $(id){
+    return document.getElementById(id);
+  }
+  function $class(elem, clase){
+    $(elem).setAttribute("class", clase);
+  }
+  function almacenarDatosUsuario(uid){
+    var refUser = ref.child('usuarios/' + uid);
+    refUser.set({
+      email: $('emailregistro').value,
+      nombre: $('nombre').value,
+      apellidos: $('apellidos').value
+    });
+  }
+  function gestionVistaLogin(authData) {
+    var msg = $('estadologin');
+    if(authData){
+      msg.textContent = "Estás autenticado";
+      $('logout').style.display = 'inline-block';
+      $('registroForm').style.display = 'none';
+    } else {
+      msg.textContent = "No estás logueado";
+      $('logout').style.display = 'none';
+      $('registroForm').style.display = 'table';
+    }
+  }
+  function procesarPrimerAccesoFacebook() {
+    var auth = ref.getAuth();
+    if (auth) {
+      if (auth.provider === "facebook"){
+        var refUser = ref.child("usuarios/" + auth.uid);
+        refUser.on("value", function(snapUser){
+          if(! snapUser.val()) {
+            // no tenemos ese uid, tengo que setearlo
+            console.log("auth", auth);
+            refUser.set({
+              nombre: auth.facebook.cachedUserProfile.first_name,
+              apellidos: auth.facebook.cachedUserProfile.last_name,
+              email: auth.facebook.email
+            })
+          }
+        })
+      }
+    }
+  }
+
+  function procesarPrimerAccesoTwitter(){
+    var auth = ref.getAuth();
+    if (auth) {
+      if (auth.provider === "twitter"){
+        var refUser = ref.child("usuarios/" + auth.uid);
+        refUser.on("value", function(snapUser){
+          if(! snapUser.val()) {
+            // no tenemos ese uid, tengo que setearlo
+            console.log("auth", auth);
+            refUser.set({
+              nombre: auth.twitter.displayName,
+              apellidos: "",
+              usuario: auth.twitter.username
+            });
+          }
+        })
+      }
+    }
+  }
+
+  function procesarPrimerAccesoGithub(){
+    var auth = ref.getAuth();
+    if (auth) {
+      if (auth.provider === "github"){
+        var refUser = ref.child("usuarios/" + auth.uid);
+        refUser.on("value", function(snapUser){
+          if(! snapUser.val()) {
+            // no tenemos ese uid, tengo que setearlo
+            console.log("auth", auth);
+            // refUser.set({
+            //   nombre: auth.twitter.displayName,
+            //   apellidos: "",
+            //   usuario: auth.twitter.username
+            // });
+          }
+        })
+      }
+    }
+  }
+
+
+  var ref = new Firebase("https://yep.firebaseio.com/");
+  gestionVistaLogin(ref.getAuth());
+
+  ref.onAuth(function(authData){
+    gestionVistaLogin(authData);
+  });
+
+  function usuario(lugar){
+    return {
+      email: $("email" + lugar).value,
+      password: $("clave" + lugar).value
+    }
+  }
+
+  $('botonregistro').addEventListener("click", function() {
+    var nuevoUsuario = usuario("registro");
+    console.log(nuevoUsuario);
+    ref.createUser(nuevoUsuario, function(error, userData){
+      if (error) {
+        $class('mensaje', 'error');
+        $('mensaje').textContent = "Error en el registro: " + errorCodes(error.code);
+      } else {
+        $class('mensaje', 'correcto');
+        $('mensaje').textContent = "Registro realizado con suceso " + userData.uid;
+        almacenarDatosUsuario(userData.uid);
+        ref.authWithPassword(nuevoUsuario);
+      }
+    });
+  });
+
+  $('botonlogin').addEventListener("click", function() {
+    var nuevoUsuario = usuario("login");
+    console.log("login" + nuevoUsuario);
+    ref.authWithPassword(nuevoUsuario, function(error, userData){
+      if (error) {
+        $class('mensaje', 'error');
+        $('mensaje').textContent = "Error en el login: " + errorCodes(error.code);
+      } else {
+        $class('mensaje', 'correcto');
+        ref.child('usuarios').child(userData.uid).once("value", function(snapUser){
+          var user = snapUser.val();
+          var nombreCompleto = user.nombre + " " + user.apellidos;
+          $('mensaje').textContent = "Login realizado con " + nombreCompleto;
+        })
+      }
+    });
+  });
+
+  $('logfacebook').addEventListener("click", function() {
+    ref.authWithOAuthPopup("facebook", function(error, authData) {
+      if (error) {
+        $('mensaje').textContent = "Fallo en el login! " + error.code;
+        $class('mensaje', 'error');
+        console.log(error, "error")
+      } else {
+        $class('mensaje', 'correcto');
+        $('mensaje').textContent = "Realizado login con Facebook";
+        procesarPrimerAccesoFacebook();
+      }
+    }, {
+      scope: "public_profile,email"
+    });
+  });
+
+  $('logtwitter').addEventListener("click", function() {
+    ref.authWithOAuthPopup("twitter", function(error, authData) {
+      if (error) {
+        $('mensaje').textContent = "Fallo en el login! " + error.code;
+        $class('mensaje', 'error');
+        console.log(error, "error")
+      } else {
+        $class('mensaje', 'correcto');
+        $('mensaje').textContent = "Realizado login con Twitter";
+        procesarPrimerAccesoTwitter();
+      }
+    });
+  });
+
+  $('loggithub').addEventListener("click", function() {
+    ref.authWithOAuthPopup("github", function(error, authData) {
+      if (error) {
+        $('mensaje').textContent = "Fallo en el login! " + error.code;
+        $class('mensaje', 'error');
+      } else {
+        $class('mensaje', 'correcto');
+        $('mensaje').textContent = "Realizado login con Github";
+        //procesarPrimerAccesoGithub();
+      }
+    });
+  });
+
+  $('loggoogle').addEventListener("click", function() {
+    ref.authWithOAuthPopup("google", function(error, authData) {
+      if (error) {
+        console.log("Login Failed!", error);
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+      }
+    });
+    // ref.authWithOAuthPopup("google", function(error, authData) {
+    //   if (error) {
+    //     $('mensaje').textContent = "Fallo en el login! " + error.code;
+    //     $class('mensaje', 'error');
+    //   } else {
+    //     $class('mensaje', 'correcto');
+    //     $('mensaje').textContent = "Realizado login con Google";
+    //     //procesarPrimerAccesoGithub();
+    //   }
+    // });
+  });
+
+  $('recordarclave').addEventListener("click", function(evento){
+    $('mensaje').textContent = "";
+    $('mensaje').removeAttribute('class');
+    evento.preventDefault();
+    var email = $('emaillogin').value;
+    if(email == ""){
+      $class('mensaje', 'error');
+      $('mensaje').textContent = "Escribe un email en el formulario de login";
+    } else {
+      ref.resetPassword({
+        email: email
+      }, function(error) {
+        if(error) {
+          $class('mensaje', 'error');
+          $('mensaje').textContent = "Error al intentar mandar el reset de password " + error.code;
+        } else {
+          $class('mensaje', 'correcto');
+          $('mensaje').textContent = "Reset de password enviado a tu correo";
+        }
+
+      });
+    }
+  })
+  $('logout').addEventListener("click", function() {
+    ref.unauth();
+    $class('mensaje', 'correcto');
+    $('mensaje').textContent = "Logout realizado";
+  });
+  </script>
+</body>
+</html>
