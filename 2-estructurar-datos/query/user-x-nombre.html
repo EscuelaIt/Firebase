@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todos los cursos</title>
+</head>
+<body>
+  <h1>Todos los usuarios</h1>
+  <div id="listado"></div>
+
+  <script src="../../bower_components/firebase/firebase.js"></script>
+  <script>
+    function $(id){
+      return document.getElementById(id);
+    }
+
+    var ref = new Firebase("https://yep.firebaseio.com/usuarios").orderByChild("nombre");
+    ref.on("child_added", function(s){
+      var user = s.val();
+      var elem = document.createElement("p");
+      elem.textContent = user.nombre + " - " + user.apellidos;
+      $('listado').appendChild(elem);
+    });
+  </script>
+</body>
+</html>

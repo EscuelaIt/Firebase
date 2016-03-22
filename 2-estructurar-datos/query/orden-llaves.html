@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todos los cursos</title>
+</head>
+<body>
+  <h2>ordenado por llaves</h2>
+  <div id="listado"></div>
+  <h2>Ordenado por valores</h2>
+  <div id="listado2"></div>
+
+  <script src="../../bower_components/firebase/firebase.js"></script>
+  <script>
+    function $(id){
+      return document.getElementById(id);
+    }
+
+    var ref = new Firebase("https://yep.firebaseio.com/usuarios/0owH4289-3123-4064-887f-b7ce62cdkwjw");
+    var refOrden = ref.orderByKey();
+    refOrden.on("child_added", function(s,sAnt){
+      var item = s.val();
+      console.log(s.key(), sAnt);
+      var elem = document.createElement("p");
+      elem.setAttribute('id', s.key());
+      elem.textContent = s.key() + ": " + item;
+      //$('listado').appendChild(elem);
+      //firstChild.parentNode.insertBefore(newPre, firstChild.nextSibling);
+      if(sAnt){
+        $('listado').insertBefore(elem, $(sAnt).nextSibling);
+      } else {
+        $('listado').appendChild(elem);
+      }
+
+    });
+
+    var refOrden = ref.orderByValue();
+    refOrden.on("child_added", function(s){
+      var item = s.val();
+      var elem = document.createElement("p");
+      elem.textContent = s.key() + ": " + item;
+      $('listado2').appendChild(elem);
+    });
+  </script>
+</body>
+</html>
+
+
+

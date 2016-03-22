@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,8 +99,9 @@
       <div id="social">
         <img src="log-twitter.png" alt="Login con Twitter" id="logtwitter">
         <img src="log-facebook.png" alt="Login con Facebook" id="logfacebook">
-        <a href="" id="loggithub">github</a>
-        <a href="" id="loggoogle">google</a>
+        <a href="" ></a>
+        <img src="log-github.png" alt="Login con Github" id="loggithub">
+        <img src="log-google.png" alt="Login con Google" id="loggoogle">
       </div>
     </section>
   </div>
@@ -144,65 +146,6 @@
       msg.textContent = "No estás logueado";
       $('logout').style.display = 'none';
       $('registroForm').style.display = 'table';
-    }
-  }
-  function procesarPrimerAccesoFacebook() {
-    var auth = ref.getAuth();
-    if (auth) {
-      if (auth.provider === "facebook"){
-        var refUser = ref.child("usuarios/" + auth.uid);
-        refUser.on("value", function(snapUser){
-          if(! snapUser.val()) {
-            // no tenemos ese uid, tengo que setearlo
-            console.log("auth", auth);
-            refUser.set({
-              nombre: auth.facebook.cachedUserProfile.first_name,
-              apellidos: auth.facebook.cachedUserProfile.last_name,
-              email: auth.facebook.email
-            })
-          }
-        })
-      }
-    }
-  }
-
-  function procesarPrimerAccesoTwitter(){
-    var auth = ref.getAuth();
-    if (auth) {
-      if (auth.provider === "twitter"){
-        var refUser = ref.child("usuarios/" + auth.uid);
-        refUser.on("value", function(snapUser){
-          if(! snapUser.val()) {
-            // no tenemos ese uid, tengo que setearlo
-            console.log("auth", auth);
-            refUser.set({
-              nombre: auth.twitter.displayName,
-              apellidos: "",
-              usuario: auth.twitter.username
-            });
-          }
-        })
-      }
-    }
-  }
-
-  function procesarPrimerAccesoGithub(){
-    var auth = ref.getAuth();
-    if (auth) {
-      if (auth.provider === "github"){
-        var refUser = ref.child("usuarios/" + auth.uid);
-        refUser.on("value", function(snapUser){
-          if(! snapUser.val()) {
-            // no tenemos ese uid, tengo que setearlo
-            console.log("auth", auth);
-            // refUser.set({
-            //   nombre: auth.twitter.displayName,
-            //   apellidos: "",
-            //   usuario: auth.twitter.username
-            // });
-          }
-        })
-      }
     }
   }
 
@@ -271,6 +214,27 @@
     });
   });
 
+  function procesarPrimerAccesoFacebook() {
+    var auth = ref.getAuth();
+    if (auth) {
+      if (auth.provider === "facebook"){
+        var refUser = ref.child("usuarios/" + auth.uid);
+        refUser.on("value", function(snapUser){
+          if(! snapUser.val()) {
+            // no tenemos ese uid, tengo que setearlo
+            console.log("auth", auth);
+            refUser.set({
+              nombre: auth.facebook.cachedUserProfile.first_name,
+              apellidos: auth.facebook.cachedUserProfile.last_name,
+              email: auth.facebook.email
+            })
+          }
+        })
+      }
+    }
+  }
+
+
   $('logtwitter').addEventListener("click", function() {
     ref.authWithOAuthPopup("twitter", function(error, authData) {
       if (error) {
@@ -285,6 +249,26 @@
     });
   });
 
+  function procesarPrimerAccesoTwitter(){
+    var auth = ref.getAuth();
+    if (auth) {
+      if (auth.provider === "twitter"){
+        var refUser = ref.child("usuarios/" + auth.uid);
+        refUser.on("value", function(snapUser){
+          if(! snapUser.val()) {
+            // no tenemos ese uid, tengo que setearlo
+            console.log("auth", auth);
+            refUser.set({
+              nombre: auth.twitter.displayName,
+              apellidos: "",
+              usuario: auth.twitter.username
+            });
+          }
+        })
+      }
+    }
+  }
+
   $('loggithub').addEventListener("click", function() {
     ref.authWithOAuthPopup("github", function(error, authData) {
       if (error) {
@@ -293,30 +277,66 @@
       } else {
         $class('mensaje', 'correcto');
         $('mensaje').textContent = "Realizado login con Github";
-        //procesarPrimerAccesoGithub();
+        procesarPrimerAccesoGithub();
       }
     });
   });
 
+  function procesarPrimerAccesoGithub(){
+    var auth = ref.getAuth();
+    if (auth) {
+      if (auth.provider === "github"){
+        var refUser = ref.child("usuarios/" + auth.uid);
+        refUser.on("value", function(snapUser){
+          if(! snapUser.val()) {
+            // no tenemos ese uid, tengo que setearlo
+            console.log("auth", auth);
+            refUser.set({
+               nombre: auth.github.displayName,
+               apellidos: "",
+               usuario: auth.github.username,
+               email: auth.github.email,
+            });
+          }
+        })
+      }
+    }
+  }
+
+  var scopeGoogle = { scope: "email" };
   $('loggoogle').addEventListener("click", function() {
     ref.authWithOAuthPopup("google", function(error, authData) {
       if (error) {
-        console.log("Login Failed!", error);
+        $('mensaje').textContent = "Fallo en el login! " + error.code;
+        $class('mensaje', 'error');
       } else {
-        console.log("Authenticated successfully with payload:", authData);
+        $class('mensaje', 'correcto');
+        $('mensaje').textContent = "Realizado login con Google";
+        procesarPrimerAccesoGoogle();
       }
-    });
-    // ref.authWithOAuthPopup("google", function(error, authData) {
-    //   if (error) {
-    //     $('mensaje').textContent = "Fallo en el login! " + error.code;
-    //     $class('mensaje', 'error');
-    //   } else {
-    //     $class('mensaje', 'correcto');
-    //     $('mensaje').textContent = "Realizado login con Google";
-    //     //procesarPrimerAccesoGithub();
-    //   }
-    // });
+    }, scopeGoogle);
   });
+
+  function procesarPrimerAccesoGoogle(){
+    var auth = ref.getAuth();
+    if (auth) {
+      if (auth.provider === "google"){
+        var refUser = ref.child("usuarios/" + auth.uid);
+        refUser.on("value", function(snapUser){
+          if(! snapUser.val()) {
+            // no tenemos ese uid, tengo que setearlo
+            console.log("auth", auth);
+             refUser.set({
+                nombre: auth.google.cachedUserProfile.given_name,
+                apellidos: auth.google.cachedUserProfile.family_name,
+                email: auth.google.email
+            });
+          }
+        })
+      }
+    }
+  }
+
 
   $('recordarclave').addEventListener("click", function(evento){
     $('mensaje').textContent = "";
