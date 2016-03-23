@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "usuarios": {
+      "$iduser": {
+        ".read": "true",
+        ".write": "auth != null && auth.uid == $iduser"
+      }
+    },
+    "usuariosSuscritos": {
+      "$id": {
+        ".read": "auth != null && auth.uid == $id",
+        ".write": "auth != null && auth.uid == $id"
+      }
+    }
+  }
+}

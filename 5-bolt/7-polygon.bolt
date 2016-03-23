@@ -1,0 +1,15 @@
+type Punto{
+  x: Number,
+  y: Number
+}
+
+type Poligono {
+  desplazamiento: Punto | Null,
+  color: String,
+  puntos: Map<String, Punto>
+}
+
+path /poligonos/{idpol} is Poligono {
+  read() { true }
+  write() { true }
+}

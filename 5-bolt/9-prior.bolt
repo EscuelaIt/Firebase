@@ -1,0 +1,9 @@
+type AppMetadata {
+  name: String,
+  description: String | Null
+}
+
+path /appData is AppMetadata {
+  read() { true }
+  write() { prior(this) == null }
+}

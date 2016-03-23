@@ -1,0 +1,26 @@
+{
+  "rules": {
+    "facturas": {
+      "$id": {
+        ".validate": "newData.hasChildren(['cliente', 'num', 'createdAt'])",
+        "cliente": {
+          ".validate": "newData.isString()"
+        },
+        "num": {
+          ".validate": "newData.isNumber()"
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "updatedAt": {
+          ".validate": "newData.isNumber() || newData.val() == null"
+        },
+        "$other": {
+          ".validate": "false"
+        },
+        ".write": "data.val() == null && newData.child('createdAt').val() >= now || data.val() != null && newData.val() != null && newData.child('createdAt').val() == data.child('createdAt').val() && newData.child('updatedAt').val() != null && newData.child('updatedAt').val() >= now && newData.child('updatedAt').val() > newData.child('createdAt').val()",
+        ".read": "true"
+      }
+    }
+  }
+}

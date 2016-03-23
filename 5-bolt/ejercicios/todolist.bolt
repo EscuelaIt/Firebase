@@ -1,0 +1,18 @@
+type NameString extends String {
+  validate() {this.length > 0 && this.length <= 50}
+}
+
+type TodoList {
+  deleted: Boolean,
+  name: NameString,
+  userCreator: String
+}
+
+isCreator(idtl, uid) {
+  root.todolist[idtl].userCreator === uid
+}
+
+path /todolist/{$idtodolist} is TodoList{
+  read() {isCreator($idtodolist, auth.uid)}
+  write() {isCreator($idtodolist, auth.uid)}
+}

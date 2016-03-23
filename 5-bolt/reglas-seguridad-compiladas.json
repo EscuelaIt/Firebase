@@ -1,0 +1,79 @@
+{
+  "rules": {
+    "users": {
+      ".read": "true",
+      "$id": {
+        ".validate": "newData.hasChildren(['apellidos', 'email', 'nombre', 'provider'])",
+        "apellidos": {
+          ".validate": "newData.isString()"
+        },
+        "email": {
+          ".validate": "newData.isString()"
+        },
+        "nombre": {
+          ".validate": "newData.isString()"
+        },
+        "provider": {
+          ".validate": "newData.isString()"
+        },
+        "$other": {
+          ".validate": "false"
+        },
+        ".read": "true",
+        ".write": "$id == auth.uid"
+      }
+    },
+    "userTodolist": {
+      "$id_user": {
+        ".read": "$id_user == auth.uid",
+        ".write": "$id_user == auth.uid"
+      }
+    },
+    "todos": {
+      "$idtodolist": {
+        ".read": "root.child('todolist').child($idtodolist).child('userCreator').val() == auth.uid || root.child('todolist').child($idtodolist).child('usersShared').child(auth.uid).val() != null",
+        ".write": "newData.parent().parent().child('todolist').child($idtodolist).child('userCreator').val() == auth.uid || newData.parent().parent().child('todolist').child($idtodolist).child('usersShared').child(auth.uid).val() != null",
+        "$idtodo": {
+          ".validate": "newData.hasChildren(['completed', 'name'])",
+          "completed": {
+            ".validate": "newData.isBoolean()"
+          },
+          "name": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 50"
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        }
+      }
+    },
+    "todolist": {
+      "$idtodolist": {
+        ".validate": "newData.hasChildren(['deleted', 'name', 'userCreator'])",
+        "deleted": {
+          ".validate": "newData.isBoolean()",
+          ".write": "newData.parent().parent().parent().child('todolist').child($idtodolist).child('usersShared').child(auth.uid).val() != null"
+        },
+        "name": {
+          ".validate": "newData.isString()",
+          ".write": "newData.parent().parent().parent().child('todolist').child($idtodolist).child('usersShared').child(auth.uid).val() != null"
+        },
+        "userCreator": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 50"
+        },
+        "usersShared": {
+          ".validate": "newData.hasChildren() || newData.val() == null"
+        },
+        "$other": {
+          ".validate": "false"
+        },
+        ".read": "root.child('todolist').child($idtodolist).child('userCreator').val() == auth.uid || root.child('todolist').child($idtodolist).child('usersShared').child(auth.uid).val() != null",
+        ".write": "newData.parent().parent().child('todolist').child($idtodolist).child('userCreator').val() == auth.uid"
+      }
+    },
+    "notifications": {
+      ".read": "true",
+      ".write": "true"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "rules": {
+    "cursos": {
+      ".read": "true",
+      "$idcurso": {
+        ".validate": "newData.hasChildren(['nombre', 'descripcion'])",
+        "nombre": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 50"
+        },
+        "descripcion": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 250"
+        },
+        "$other": {
+          ".validate": "false"
+        },
+        ".write": "newData.parent().parent().child('admins').child(auth.uid).val() == true"
+      }
+    }
+  }
+}

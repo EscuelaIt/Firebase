@@ -1,0 +1,23 @@
+{
+  "rules": {
+    "usuarios": {
+      ".read": "true",
+      "idusuario": {
+        ".validate": "newData.hasChildren(['nombre', 'apellidos', 'email'])",
+        "nombre": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 150"
+        },
+        "apellidos": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 150"
+        },
+        "email": {
+          ".validate": "newData.isString()"
+        },
+        "$other": {
+          ".validate": "false"
+        },
+        ".write": "idusuario == auth.uid"
+      }
+    }
+  }
+}

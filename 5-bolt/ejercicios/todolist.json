@@ -1,0 +1,23 @@
+{
+  "rules": {
+    "todolist": {
+      "$idtodolist": {
+        ".validate": "newData.hasChildren(['deleted', 'name', 'userCreator'])",
+        "deleted": {
+          ".validate": "newData.isBoolean()"
+        },
+        "name": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 50"
+        },
+        "userCreator": {
+          ".validate": "newData.isString()"
+        },
+        "$other": {
+          ".validate": "false"
+        },
+        ".read": "root.child('todolist').child($idtodolist).child('userCreator').val() == auth.uid",
+        ".write": "newData.parent().parent().child('todolist').child($idtodolist).child('userCreator').val() == auth.uid"
+      }
+    }
+  }
+}

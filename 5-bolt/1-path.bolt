@@ -1,0 +1,4 @@
+path /usuarios {
+  read() { true }
+  write() { true }
+}

@@ -1,0 +1,13 @@
+type Msg {
+  from: String,
+  to: String,
+  cuerpo: String,
+  validate() {this.to.length > 2 && this.to.length <= 50}
+}
+
+path /mensajes/{id} is Msg;
+
+path /mensajes {
+  read() { true }
+  write() { true }
+}

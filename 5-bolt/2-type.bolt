@@ -1,0 +1,15 @@
+type Msg {
+  from: String,
+  to: String,
+  body: String,
+  date: Number
+}
+
+path /mensajes/{id} is Msg {
+  read() { true }
+  write() { true }
+}
+
+path /respuesta/{id} is Msg {
+  read() { true }
+}

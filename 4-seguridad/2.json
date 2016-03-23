@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "cursos": {
+      ".read": true,
+      "$idcurso": {
+        ".validate": "newData.hasChild('fecha') && newData.child('fecha') >= now"
+      }
+    }
+  }
+}

@@ -1,0 +1,34 @@
+type NameString extends String {
+  validate() {this.length > 0 && this.length <= 50}
+}
+
+type TodoList {
+  deleted: Boolean,
+  name: NameString,
+  userCreator: String
+}
+
+isCreator(idtl, uid) {
+  root.todolist[idtl].userCreator === uid
+}
+
+isShared(idtl, uid) {
+  root.todolist[idtl].usersShared[uid] != null
+}
+
+isCreatorOrShared(idtl, uid){
+  isCreator(idtl, uid) || isShared(idtl, uid)
+}
+
+path /todolist/{$idtodolist} is TodoList{
+  read() {isCreatorOrShared($idtodolist, auth.uid)}
+  write() {isCreator($idtodolist, auth.uid)}
+}
+
+path /todolist/{$idtodolist}/name {
+  write() {isShared($idtodolist, auth.uid)}
+}
+
+path /todolist/{$idtodolist}/deleted {
+  write() {isShared($idtodolist, auth.uid)}
+}

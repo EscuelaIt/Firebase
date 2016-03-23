@@ -1,0 +1,16 @@
+type Fecha {
+  dia: Number,
+  mes: Number,
+  ano: Number,
+  validate() { this.dia > 0 && this.dia < 32 && this.mes > 0 && this.mes < 13}
+}
+type User {
+  nombre: String,
+  apellidos: String | Null,
+  fechaRegistro: String | Number | Fecha
+}
+
+path /usuarios/{iduser} is User {
+  read() { true }
+  write() { true }
+}

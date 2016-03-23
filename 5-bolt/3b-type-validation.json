@@ -1,0 +1,23 @@
+{
+  "rules": {
+    "mensajes": {
+      "$id": {
+        ".validate": "newData.hasChildren(['from', 'to', 'cuerpo']) && newData.child('to').val().length > 2 && newData.child('to').val().length <= 50",
+        "from": {
+          ".validate": "newData.isString()"
+        },
+        "to": {
+          ".validate": "newData.isString()"
+        },
+        "cuerpo": {
+          ".validate": "newData.isString()"
+        },
+        "$other": {
+          ".validate": "false"
+        }
+      },
+      ".read": "true",
+      ".write": "true"
+    }
+  }
+}

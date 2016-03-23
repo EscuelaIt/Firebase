@@ -1,0 +1,20 @@
+{
+  "rules": {
+    "corredores": {
+      "$key1": {
+        ".validate": "newData.hasChildren(['nombre']) && $key1.beginsWith('runner')",
+        "nombre": {
+          ".validate": "newData.isString()"
+        },
+        "equipo": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "$other": {
+          ".validate": "false"
+        }
+      },
+      ".read": "true",
+      ".write": "true"
+    }
+  }
+}

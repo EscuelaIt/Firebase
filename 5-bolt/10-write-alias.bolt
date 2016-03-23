@@ -1,0 +1,11 @@
+type Factura {
+  cliente: String,
+  num: Number,
+  createdAt: Number,
+  updatedAt: Number | Null
+}
+path /facturas/{id} is Factura {
+  read() { true }
+  create() { this.createdAt >= now }
+  update() { this.createdAt == prior(this).createdAt && this.updatedAt != null && this.updatedAt >= now && this.updatedAt > this.createdAt }
+}

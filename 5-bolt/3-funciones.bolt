@@ -1,0 +1,13 @@
+esUsuario(uid) {
+  auth != null && auth.uid == uid
+}
+
+path /usuarios/{iduser} {
+  read() { true }
+  write() {esUsuario(iduser)}
+}
+
+path /usuariosSuscritos/{id} {
+  read() {esUsuario(id)}
+  write() {esUsuario(id)}
+}

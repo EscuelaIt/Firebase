@@ -1,0 +1,35 @@
+{
+  "rules": {
+    "usuarios": {
+      "$iduser": {
+        ".validate": "newData.hasChildren(['nombre', 'fechaRegistro'])",
+        "nombre": {
+          ".validate": "newData.isString()"
+        },
+        "apellidos": {
+          ".validate": "newData.isString() || newData.val() == null"
+        },
+        "fechaRegistro": {
+          ".validate": "newData.isString() || newData.isNumber() || newData.hasChildren() && newData.hasChildren(['dia', 'mes', 'ano']) && newData.child('dia').val() > 0 && newData.child('dia').val() < 32 && newData.child('mes').val() > 0 && newData.child('mes').val() < 13",
+          "dia": {
+            ".validate": "newData.isNumber()"
+          },
+          "mes": {
+            ".validate": "newData.isNumber()"
+          },
+          "ano": {
+            ".validate": "newData.isNumber()"
+          },
+          "$other": {
+            ".validate": "false"
+          }
+        },
+        "$other": {
+          ".validate": "false"
+        },
+        ".read": "true",
+        ".write": "true"
+      }
+    }
+  }
+}

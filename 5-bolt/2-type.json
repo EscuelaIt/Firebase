@@ -1,0 +1,47 @@
+{
+  "rules": {
+    "mensajes": {
+      "$id": {
+        ".validate": "newData.hasChildren(['from', 'to', 'body', 'date'])",
+        "from": {
+          ".validate": "newData.isString()"
+        },
+        "to": {
+          ".validate": "newData.isString()"
+        },
+        "body": {
+          ".validate": "newData.isString()"
+        },
+        "date": {
+          ".validate": "newData.isNumber()"
+        },
+        "$other": {
+          ".validate": "false"
+        },
+        ".read": "true",
+        ".write": "true"
+      }
+    },
+    "respuesta": {
+      "$id": {
+        ".validate": "newData.hasChildren(['from', 'to', 'body', 'date'])",
+        "from": {
+          ".validate": "newData.isString()"
+        },
+        "to": {
+          ".validate": "newData.isString()"
+        },
+        "body": {
+          ".validate": "newData.isString()"
+        },
+        "date": {
+          ".validate": "newData.isNumber()"
+        },
+        "$other": {
+          ".validate": "false"
+        },
+        ".read": "true"
+      }
+    }
+  }
+}

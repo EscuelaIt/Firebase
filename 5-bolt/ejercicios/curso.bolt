@@ -1,0 +1,18 @@
+type NameString extends String {
+  validate() {this.length > 0 && this.length <= 50}
+}
+type LargeString extends String {
+  validate() {this.length > 0 && this.length <= 250}
+}
+
+type Curso {
+  nombre: NameString,
+  descripcion: LargeString
+}
+
+path /cursos {
+  read() { true }
+  write() { false }
+}
+
+path /cursos/{idcurso} is Curso;

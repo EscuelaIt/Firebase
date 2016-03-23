@@ -1,0 +1,11 @@
+type Corredor {
+  nombre: String,
+  equipo: String | Null
+}
+type CorredorID extends String{
+  validate() { this.startsWith("runner") }
+}
+path /corredores is Map<CorredorID, Corredor> {
+  read() { true }
+  write() { true }
+}

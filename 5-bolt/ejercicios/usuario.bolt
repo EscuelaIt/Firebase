@@ -1,0 +1,21 @@
+type NameString extends String {
+  validate() {this.length > 0 && this.length <= 150}
+}
+
+type User {
+  nombre: NameString,
+  apellidos: NameString,
+  email: String
+}
+
+path /usuarios {
+  read() { true }
+}
+
+esEsteUsuario(idusuario){
+  idusuario == auth.uid;
+}
+
+path /usuarios/idusuario is User {
+  write() { esEsteUsuario(idusuario) }
+}

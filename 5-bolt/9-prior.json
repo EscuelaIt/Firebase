@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "appData": {
+      ".validate": "newData.hasChildren(['name'])",
+      "name": {
+        ".validate": "newData.isString()"
+      },
+      "description": {
+        ".validate": "newData.isString() || newData.val() == null"
+      },
+      "$other": {
+        ".validate": "false"
+      },
+      ".read": "true",
+      ".write": "data.val() == null"
+    }
+  }
+}
