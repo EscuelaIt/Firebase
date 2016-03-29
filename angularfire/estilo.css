@@ -1,0 +1,61 @@
+body{
+  font-family: sans-serif;
+  font-size: 1.1em;
+}
+h1{
+  background: #adf;
+  font-size: 1.6em;
+  padding: 10px;
+  border-radius: 4px;
+}
+input, button{
+  font-size: 120%;
+  border-radius: 5px;
+}
+label {
+  display: inline-block;
+  margin-bottom: 10px;
+  width: 110px;
+}
+.cajaform {
+  border: 1px solid #d0d0d0;
+  background-color: #f2f2f2;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin: 0 0 15px 0;
+}
+.cajaform h2{
+  margin-top: 5px;
+  font-size: 1.3em;
+}
+.liuser{
+  padding: 5px;
+  background-color: #87edbf;
+  font-size: .8em;
+  display: inline-block;
+  margin: 0 5px 5px 0;
+  border-radius: 4px;
+}
+.liuser button{
+  font-size: .8em;
+  border-radius: 4px;
+}
+.mensaje {
+  padding: 5px 10px;
+  background-color: #deed97;
+  margin-bottom: 10px;
+}
+.msgerror{
+  color: red;
+}
+.msgcorrecto{
+  color: black;
+}
+.redes{
+  margin: 10px 0;
+}
+.redes img{
+  width: 120px;
+  margin-right: 10px;
+  cursor: pointer;
+}

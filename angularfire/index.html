@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AngularFire</title>
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body ng-app="angularFireApp" ng-controller="AngularFireController as vm">
+  <div class="cajaform">
+   <h1>AngularFire: $firebaseObject</h1>
+    <h2>Formulario con $save()</h2>
+    <label>Nombre:</label> <input type="text" ng-model="vm.perfil.nombre">
+    <br>
+    <label>Apellidos:</label> <input type="text" ng-model="vm.perfil.apellidos">
+    <br>
+    <label>Email:</label> <input type="text" ng-model="vm.perfil.email">
+    <br>
+    <button ng-click="vm.guardar()">Salvar usuario</button>
+  </div>
+  <div class="cajaform">
+    <h2>formulario 3-way-binding</h2>
+    <label>Nombre:</label> <input type="text" ng-model="perfil2.nombre">
+    <br>
+    <label>Apellidos:</label> <input type="text" ng-model="perfil2.apellidos">
+    <br>
+    <label>Email:</label> <input type="text" ng-model="perfil2.email">
+  </div>
+
+    <h1>AngularFire: $firebaseArray</h1>
+  <ul>
+    <li class="liuser" ng-repeat="curso in vm.cursos">
+      {{curso.nombre}}
+      <button ng-click="vm.cursoEditar(curso)">E</button>
+      <button ng-click="vm.cursoBorrar(curso)">X</button>
+    </li>
+  </ul>
+  <div class="cajaform">
+    <h2>Alta de un Curso</h2>
+    <label>Nombre:</label> <input type="text" ng-model="vm.cursoAlta.nombre">
+    <br>
+    <label>Información:</label> <input type="text" ng-model="vm.cursoAlta.informacion">
+    <br>
+    <button ng-click="vm.altaCurso()">Crear Curso</button>
+  </div>
+
+  <div class="cajaform" ng-show="vm.objCursoEditar">
+    <h2>Editar Curso</h2>
+    <label>Nombre:</label> <input type="text" ng-model="vm.objCursoEditar.nombre">
+    <br>
+    <label>Información:</label> <input type="text" ng-model="vm.objCursoEditar.informacion">
+    <br>
+    <button ng-click="vm.guardarCursoEditado()">Guardar Curso</button>
+  </div>
+
+
+  <h1>AngularFire: $firebaseAuth</h1>
+  <div class="mensaje" ng-class="vm.mensajeClass" ng-show="vm.mensajeAutenticado">{{vm.mensajeAutenticado}}</div>
+  <div class="cajaform" ng-show="!vm.autenticado">
+    <h2>Registro de usuarios</h2>
+    <label>Nombre:</label> <input type="text" ng-model="vm.registrousuario.nombre">
+    <br>
+    <label>Apellidos:</label> <input type="text" ng-model="vm.registrousuario.apellidos">
+    <br>
+    <label>Email:</label> <input type="text" ng-model="vm.registrousuario.email">
+    <br>
+    <label>Clave:</label> <input type="text" ng-model="vm.registrousuario.password">
+    <br>
+    <button ng-click="vm.registrarUsuario()">Registrar usuario</button>
+  </div>
+
+  <div class="cajaform" ng-show="!vm.autenticado">
+    <h2>Login de usuarios</h2>
+    <label>Email:</label> <input type="text" ng-model="vm.loginusuario.email">
+    <br>
+    <label>Clave:</label> <input type="text" ng-model="vm.loginusuario.password">
+    <br>
+    <button ng-click="vm.loguearUsuario()">Login</button>
+    <div class="redes">
+      <img src="log-twitter.png" alt="Login con Twitter" ng-click="vm.logtwitter()">
+      <img src="log-facebook.png" alt="Login con Facebook" ng-click="vm.logfacebook()">
+      <img src="log-github.png" alt="Login con Github" ng-click="vm.loggithub()">
+      <img src="log-google.png" alt="Login con Google" ng-click="vm.loggoogle()">
+    </div>
+  </div>
+
+  <button ng-show="vm.autenticado" ng-click="vm.dologout()">Logout</button>
+
+  <script src="../bower_components/angular/angular.min.js"></script>
+  <script src="../bower_components/firebase/firebase.js"></script>
+  <script src="../bower_components/angularfire/dist/angularfire.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
